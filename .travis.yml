@@ -1,0 +1,15 @@
+# .travis.yml
+#language: python
+#python:
+#  - "2.7"
+#before_install:
+#  - "make -C third-party install-gtest"
+install:
+  - "bash getfiles.bash"
+before_script:
+  - "mysql -e 'create database myapp_test;'"
+script:
+  - "bash build.bash"
+#after_success:
+#after_failure:
+#notifications:
