@@ -1,16 +1,15 @@
 # .travis.yml
 language: C
-#python:
-#  - "2.7"
-#before_install:
-#  - "make -C third-party install-gtest"
+before_install:
+  - "sudo apt-get update -qq"
+  - "sudo apt-get install rsync"
 #install:
 #  - "bash getfiles.bash"
 #before_script:
 #  - "mysql -e 'create database myapp_test;'"
 script:
   - "bash getfiles.bash"
-#  - "bash build.bash"
+  - "bash test.bash"
 #after_success:
 #after_failure:
 #notifications:
