@@ -11,7 +11,7 @@ exec { 'install':
   require => [ Package['rsync'], Exec['firewall-off'] ],
 }
 exec { 'smrtportal-start':
-  command => '/home/vagrant/admin/bin/tomcatd',
+  command => '/home/vagrant/admin/bin/tomcatd start',
   user => 'vagrant',
   path => [ '/bin', '/usr/bin' ],
   require => [ Exec['install'] ],
