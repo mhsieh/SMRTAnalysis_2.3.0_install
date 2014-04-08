@@ -1,5 +1,5 @@
 # .travis.yml
-#language: python
+language: C
 #python:
 #  - "2.7"
 #before_install:
