@@ -33,3 +33,16 @@ curl -s -u administrator:admin/123 http://localhost:8080/smrtportal/api/settings
    current/redist/python2.7/bin/python -mjson.tool
 curl -s -u administrator:admin/123 http://localhost:8080/smrtportal/api/inputs/scan         -d 'paths=["common/test/primary/lambda_v210"]' | \
    current/redist/python2.7/bin/python -mjson.tool
+curl -s -u administrator:admin/123 http://localhost:8080/smrtportal/api/jobs/create \
+        -d 'data={"name":"DemoJobName", "createdBy":"administrator", "description":"demo job", "protocolName":"RS_Resequencing.1", "groupNames":["all"], "inputIds":["78807"]}'| \
+        current/redist/python2.7/bin/python -mjson.tool
+
+curl -s -u administrator:admin/123 http://localhost:8080/smrtportal/api/jobs/16437/start | \
+   current/redist/python2.7/bin/python -mjson.tool
+
+while [ $((curl -s -u administrator:admin/123 http://localhost:8080/smrtportal/api/jobs/16437/status \
+         | current/redist/python2.7/bin/python -mjson.tool \
+         | grep -e '"code": "Submitted"' -e '"code": "In Progress"' -e '"code": "Started"'||true) | wc -l) -gt 0 ]; do
+    echo -n .
+    sleep 3
+done && echo

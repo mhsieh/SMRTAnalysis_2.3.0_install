@@ -3,6 +3,7 @@ exec { 'firewall-off':
   path => [ '/usr/sbin' ],
 }
 package { 'rsync': ensure => present, }
+package { 'curl': ensure => present, }
 exec { 'install':
   command => '/vagrant/files/install.bash',
   user => 'vagrant',
@@ -19,6 +20,6 @@ exec { 'smrtportal-start':
 exec { 'register-smrtportal':
   command => '/vagrant/files/register.bash',
   user => 'vagrant',
-  path => [ '/bin', '/usr/bin' ],
-  require => [ Exec['smrtportal-start'] ],
+  path => [ '/bin', '/usr/bin', '/sbin', '/usr/sbin' ],
+  require => [ Package['curl'], Exec['smrtportal-start'] ],
 }
