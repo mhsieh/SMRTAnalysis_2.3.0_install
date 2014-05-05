@@ -3,7 +3,7 @@
 if [ ! -d install/smrtanalysis-2.2.0.133377 ]; then
    bash distfiles/smrtanalysis-2.2.0.133377.run \
       --rootdir $PWD \
-      -p distfiles/smrtanalysis-2.2.0.133377-patch-0.0.run \
+      --patchfile smrtanalysis-2.2.0.133377-patch-1.run \
       --skip-userquery \
       --ignore-syscheck \
       --dnsname 127.0.0.1 \
