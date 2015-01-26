@@ -1,17 +1,54 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+# for issue at https://github.com/PacificBiosciences/Bioinformatics-Training/issues/15
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "trusty64"
-  config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
+  #config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/precise64"
   config.vm.network "forwarded_port", guest:8080, host:8080
-  config.vm.provision :puppet
   config.vm.provider "virtualbox" do |vb|
-    # Don't boot with headless mode
-    # vb.gui = true
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
+    vb.customize ["modifyvm", :id, "--memory", "2048"]
     vb.customize ["modifyvm", :id, "--cpus", "2"]
   end
-  config.vm.synced_folder "../distfiles", "/distfiles"
+
+$script = <<BOOTSTRAP
+apt-get update
+apt-get -y install rsync
+su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis_2.3.0.140936.run"
+su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p1.run"
+su vagrant - -c "bash smrtanalysis_2.3.0.140936.run \
+    --rootdir /home/vagrant \
+    --patchfile smrtanalysis-patch_2.3.0.140936.p1.run \
+    --skip-userquery \
+    --ignore-syscheck \
+    --dnsname 127.0.0.1 \
+    --smrtportal-main-port 8080 \
+    --smrtportal-shutdown-port 8005 \
+    --tmpdir /tmp \
+    --skip-userdataquery \
+    --dbport 53306 \
+    --jmstype NONE \
+    --numprocs 2 \
+    --batch"
+su vagrant - -c "admin/bin/smrtportald-initd start"
+# tomcatd needs some time to unpack web archive files
+sleep 9
+pgrep -f tomcat
+pgrep -f mysql
+# print out the version
+curl -s http://localhost:8080/smrtportal/api/about/ | \
+   current/redist/python2.7/bin/python -mjson.tool
+# register the administrator with PacBio#1 password
+curl -s -d \
+   'data={"userName":"administrator","email":"root@localhost","password":"PacBio#1","confirmPassword":"PacBio#1"}' \
+   http://localhost:8080/smrtportal/api/users/register | \
+   current/redist/python2.7/bin/python -mjson.tool
+sed -i -e /^exit/d /etc/rc.local
+echo su vagrant - -c '"/home/vagrant/admin/bin/smrtportald-initd start"' >> /etc/rc.local
+echo exit 0 >> /etc/rc.local
+chmod 755 /etc/rc.local
+BOOTSTRAP
+
+  config.vm.provision :shell, :inline => $script
 end
