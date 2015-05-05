@@ -1,9 +1,9 @@
 #!/bin/bash
 # using the batch mode
-if [ ! -d install/smrtanalysis-2.2.0.133377 ]; then
-   bash distfiles/smrtanalysis-2.2.0.133377.run \
+if [ ! -d install/smrtanalysis_2.3.0.140936 ]; then
+   bash distfiles/smrtanalysis_2.3.0.140936.run \
       --rootdir $PWD \
-      --patchfile distfiles/smrtanalysis-2.2.0.133377-patch-1.run \
+      --patchfile distfiles/smrtanalysis-patch_2.3.0.140936.p3.run \
       --skip-userquery \
       --ignore-syscheck \
       --dnsname 127.0.0.1 \
