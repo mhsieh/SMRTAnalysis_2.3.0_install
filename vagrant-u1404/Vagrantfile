@@ -16,10 +16,10 @@ $script = <<BOOTSTRAP
 apt-get update
 apt-get -y install rsync
 su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis_2.3.0.140936.run"
-su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p3.run"
+su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p4.run"
 su vagrant - -c "bash smrtanalysis_2.3.0.140936.run \
     --rootdir /home/vagrant \
-    --patchfile smrtanalysis-patch_2.3.0.140936.p3.run \
+    --patchfile smrtanalysis-patch_2.3.0.140936.p4.run \
     --skip-userquery \
     --ignore-syscheck \
     --dnsname 127.0.0.1 \
