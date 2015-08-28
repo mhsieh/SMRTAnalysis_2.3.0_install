@@ -49,7 +49,7 @@ slots              99999
 :wq
 EOF
 qconf -sq main.q   | grep '^pe_list.*smp' > /dev/null || qconf -aattr queue pe_list 'smp' main.q
-qconf -sq main.q   | grep '^slots'        > /dev/null || qconf -rattr queue slots 2 main.q
+qconf -sq main.q   | grep '^slots'        > /dev/null || qconf -rattr queue slots 1 main.q
 qconf -sconf global|grep 'MAX_DYN_EC=100' > /dev/null || mod4sync
 exit $?
 
