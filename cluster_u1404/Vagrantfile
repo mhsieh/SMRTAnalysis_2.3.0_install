@@ -1,14 +1,16 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 Vagrant::Config.run do |config|
-  #config.vm.box = 'lucid64'
-  #config.vm.box = 'precise64'
   config.vm.box = "ubuntu/trusty64"
   
   config.vm.define :head01 do |head01|
      head01.vm.host_name = 'head01.local'
      head01.vm.network :hostonly, '192.168.50.201'
      head01.vm.forward_port 8080, 8080
+     #head01.vm.provider "virtualbox" do |vb|
+     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
+     #   vb.customize ["modifyvm", :id, "--cpus", "2"]
+     #end
      head01.vm.provision :puppet do |puppet|
         puppet.manifests_path = 'manifests'
         puppet.manifest_file = 'master.pp'
@@ -18,6 +20,10 @@ Vagrant::Config.run do |config|
   config.vm.define :node01 do |node01|
      node01.vm.host_name = 'node01.local'
      node01.vm.network :hostonly, '192.168.50.101'
+     #head01.vm.provider "virtualbox" do |vb|
+     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
+     #   vb.customize ["modifyvm", :id, "--cpus", "2"]
+     #end
      node01.vm.provision :puppet do |puppet|
         puppet.manifests_path = 'manifests'
         puppet.manifest_file = 'slave.pp'
@@ -27,6 +33,10 @@ Vagrant::Config.run do |config|
   config.vm.define :node02 do |node02|
      node02.vm.host_name = 'node02.local'
      node02.vm.network :hostonly, '192.168.50.102'
+     #head01.vm.provider "virtualbox" do |vb|
+     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
+     #   vb.customize ["modifyvm", :id, "--cpus", "2"]
+     #end
      node02.vm.provision :puppet do |puppet|
         puppet.manifests_path = 'manifests'
         puppet.manifest_file = 'slave.pp'
