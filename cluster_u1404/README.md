@@ -10,7 +10,8 @@ And follow the instructions, mostly pressing enters, use localhost as the hostna
 SGE should be automatically picked up. After installation, use 
 ```
 /smrtanalysis/admin/smrtportal-initd start
-``` to start the SMRT portal.
+```
+to start the SMRT portal.
 
 - Point your host safari/firefox to log on http://localhost:8080
 - register administrator is required for a new portal
