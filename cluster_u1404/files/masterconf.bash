@@ -1,6 +1,6 @@
 #!/bin/bash -e
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/opt/vagrant_ruby/bin:$PATH
-export EDITOR=vi
+export EDITOR=ex
 mod4sync(){
   qconf -sconf global > /tmp/global
   sed -i -e 's/qmaster_params               none/qmaster_params               MAX_DYN_EC=1000/g' /tmp/global
@@ -24,9 +24,7 @@ qlogin_daemon                /usr/sbin/sshd -i
 EOF
   qconf -Mconf /tmp/global
 }
-if [ ! -s /var/lib/gridengine/default/common/act_qmaster ]; then
-    sleep 10
-fi
+grep head01 /var/lib/gridengine/default/common/act_qmaster > /dev/null || sleep 10
 pgrep -f 'sge_qmaster' || sleep 10
 qconf -help > /dev/null
 qconf -sm             | grep vagrant      > /dev/null || sudo -u sgeadmin qconf -am vagrant
@@ -45,7 +43,10 @@ EOF
 qconf -sq main.q      | grep '@allhosts'  > /dev/null || qconf -aattr queue hostlist @allhosts main.q
 qconf -spl            | grep smp          > /dev/null || qconf -ap smp << EOF
 /^slots
-Cslots              99999:wq
+c
+slots              99999
+.
+:wq
 EOF
 qconf -sq main.q   | grep '^pe_list.*smp' > /dev/null || qconf -aattr queue pe_list 'make smp' main.q
 qconf -sq main.q   | grep '^slots'        > /dev/null || qconf -aattr queue slots 2 main.q
