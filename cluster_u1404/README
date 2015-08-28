@@ -1,0 +1,9 @@
+
+vagrant up
+vagrant ssh head01
+bash /vagrant/smrtanalysis_2.3.0.140550_libc-2.5_centos-53.run --rootdir /smrtanalysis
+(and follow the instruction, mostly pressing enters, use localhost as the hostname)
+(after installed, use /smrtanalysis/admin/smrtportal-initd start to start)
+(use host safari/firefox to log on http://localhost:8080)
+(register administrator)
+(then start to use your mini cluster)
