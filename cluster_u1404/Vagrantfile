@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      node01.vm.hostname = 'node01.local'
      node01.vm.network "private_network", ip: '192.168.50.101'
      node01.vm.provider "virtualbox" do |vb|
-        vb.customize ["modifyvm", :id, "--memory", "2048"]
+     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
         vb.customize ["modifyvm", :id, "--cpus", "2"]
      end
      node01.vm.provision :puppet do |puppet|
@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      node02.vm.hostname = 'node02.local'
      node02.vm.network "private_network", ip: '192.168.50.102'
      node02.vm.provider "virtualbox" do |vb|
-        vb.customize ["modifyvm", :id, "--memory", "2048"]
+     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
         vb.customize ["modifyvm", :id, "--cpus", "2"]
      end
      node02.vm.provision :puppet do |puppet|
