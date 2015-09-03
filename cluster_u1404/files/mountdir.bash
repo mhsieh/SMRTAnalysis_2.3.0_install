@@ -6,4 +6,5 @@ EOF
 mkdir -p /smrtanalysis
 mount /smrtanalysis
 dd if=/dev/zero of=/swapfile bs=1M count=1024
-swapon /swapfile
+/sbin/mkswap /swapfile
+/sbin/swapon /swapfile
