@@ -30,7 +30,7 @@ case $operatingsystem {
       }
     }
     exec { 'apt-update':
-      command => 'apt-get update',
+      command => '/bin/echo apt-get update',
       path => [ '/usr/bin' ],
     }
     package { 'postfix': ensure => present, require => [ Exec['apt-update'] ], }
@@ -38,7 +38,7 @@ case $operatingsystem {
     package { 'gridengine-client': ensure => present, }
     package { 'gridengine-exec':   ensure => present, }
     exec { 'whereistheqmaster':
-      command => 'echo head01 > /var/lib/gridengine/default/common/act_qmaster',
+      command => 'echo master > /var/lib/gridengine/default/common/act_qmaster',
       path    => [ '/bin' ],
       notify  => Service['gridengine-exec'],
       require => [ Package['gridengine-exec'] ],
