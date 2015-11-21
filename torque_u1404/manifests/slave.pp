@@ -20,7 +20,7 @@ file { '/home/vagrant/.ssh/config':
     source => '/vagrant/files/.ssh/config',
 }
 exec { 'apt-update':
-  command => 'apt-get update',
+  command => '/bin/echo apt-get update',
   path => [ '/usr/bin' ],
 }
 package { 'postfix': ensure => present, require => [ Exec['apt-update'] ], }
