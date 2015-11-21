@@ -1,7 +1,8 @@
 127.0.0.1	localhost
-192.168.50.201	torqueserver torqueserver.local master
-192.168.50.101	node1        node1.local
-192.168.50.102	node2        node2.local
+192.168.50.201	master master.local
+192.168.50.201	torqueserver
+192.168.50.101	node1  node1.local
+192.168.50.102	node2  node2.local
 
 # The following lines are desirable for IPv6 capable hosts
 ::1	localhost ip6-localhost ip6-loopback
