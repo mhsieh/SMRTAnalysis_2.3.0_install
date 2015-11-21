@@ -19,8 +19,15 @@ file { '/home/vagrant/.ssh/config':
     group => vagrant,
     source => '/vagrant/files/.ssh/config',
 }
+file { '/usr/bin/qsw.py':
+    ensure => present,
+    mode => 755,
+    owner => vagrant,
+    group => vagrant,
+    source => '/vagrant/files/qsw.py',
+}
 exec { 'apt-update':
-  command => 'apt-get update',
+  command => '/bin/echo apt-get update',
   path => [ '/usr/bin' ],
 }
 package { 'postfix': ensure => present, require => [ Exec['apt-update'] ], }
