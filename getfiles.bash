@@ -1,8 +1,8 @@
 #!/bin/bash
   URLv230="http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis_2.3.0.140936.run"
-URLv230p4="http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p4.run"
+URLv230p4="http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p5.run"
   MD5v230="http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis_2.3.0.140936.run.md5"
-MD5v230p4="http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p4.run.md5"
+MD5v230p4="http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p5.run.md5"
 
 mkdir -p distfiles
 cd distfiles

@@ -24,12 +24,12 @@ qlogin_daemon                /usr/sbin/sshd -i
 EOF
   qconf -Mconf /tmp/global
 }
-grep head01 /var/lib/gridengine/default/common/act_qmaster > /dev/null || sleep 10
+grep master /var/lib/gridengine/default/common/act_qmaster > /dev/null || sleep 10
 pgrep -f 'sge_qmaster' || sleep 10
 qconf -help > /dev/null
 qconf -sm             | grep vagrant      > /dev/null || sudo -u sgeadmin qconf -am vagrant
 qconf -su users       | grep vagrant      > /dev/null || qconf -au vagrant users
-qconf -ss             | grep head01       > /dev/null || qconf -as head01.local
+qconf -ss             | grep master       > /dev/null || qconf -as master.local
 qconf -ss             | grep node01       > /dev/null || qconf -as node01.local
 qconf -ss             | grep node02       > /dev/null || qconf -as node02.local
 qconf -shgrpl         | grep @allhosts    > /dev/null || qconf -ahgrp @allhosts << EOF
