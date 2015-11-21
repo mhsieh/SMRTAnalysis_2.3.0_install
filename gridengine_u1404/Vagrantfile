@@ -5,15 +5,15 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   
-  config.vm.define "head01" do |head01|
-     head01.vm.hostname = "head01.local"
-     head01.vm.network "private_network", ip: "192.168.50.201"
-     head01.vm.network "forwarded_port", guest: 8080, host: 8080
-     #head01.vm.provider "virtualbox" do |vb|
-     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
-     #   vb.customize ["modifyvm", :id, "--cpus", "2"]
-     #end
-     head01.vm.provision :puppet do |puppet|
+  config.vm.define "master", primary: true do |master|
+     master.vm.hostname = "master.local"
+     master.vm.network "private_network", ip: "192.168.50.201"
+     master.vm.network "forwarded_port", guest: 8080, host: 8080
+     master.vm.provider "virtualbox" do |vb|
+        vb.customize ["modifyvm", :id, "--memory", "1024"]
+        vb.customize ["modifyvm", :id, "--cpus", "2"]
+     end
+     master.vm.provision :puppet do |puppet|
         puppet.manifests_path = 'manifests'
         puppet.manifest_file = 'master.pp'
      end
@@ -23,7 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      node01.vm.hostname = 'node01.local'
      node01.vm.network "private_network", ip: '192.168.50.101'
      node01.vm.provider "virtualbox" do |vb|
-     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
+        vb.customize ["modifyvm", :id, "--memory", "2048"]
         vb.customize ["modifyvm", :id, "--cpus", "2"]
      end
      node01.vm.provision :puppet do |puppet|
@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
      node02.vm.hostname = 'node02.local'
      node02.vm.network "private_network", ip: '192.168.50.102'
      node02.vm.provider "virtualbox" do |vb|
-     #   vb.customize ["modifyvm", :id, "--memory", "2048"]
+        vb.customize ["modifyvm", :id, "--memory", "2048"]
         vb.customize ["modifyvm", :id, "--cpus", "2"]
      end
      node02.vm.provision :puppet do |puppet|
