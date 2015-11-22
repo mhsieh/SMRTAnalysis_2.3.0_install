@@ -1,9 +1,11 @@
 # .travis.yml
+sudo: false
 language: C
-before_install:
-  - "sudo apt-get update -qq"
-  - "sudo apt-get install rsync"
-  - "sudo apt-get install curl"
+addons:
+  apt:
+    packages:
+    - rsync
+    - curl
 #install:
 #  - "bash getfiles.bash"
 #before_script:
