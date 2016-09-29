@@ -4,8 +4,8 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  #config.vm.box = "ubuntu/trusty64"
-  config.vm.box = "ubuntu/precise64"
+  config.vm.box = "ubuntu/trusty64"
+  #config.vm.box = "ubuntu/precise64"
   config.vm.network "forwarded_port", guest:8080, host:8080
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
@@ -15,8 +15,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 $script = <<BOOTSTRAP
 apt-get update
 apt-get -y install rsync
-su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis_2.3.0.140936.run"
-su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p5.run"
+if [ ! -e /vagrant/smrtanalysis_2.3.0.140936.run ]; then
+  su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis_2.3.0.140936.run"
+else
+  su vagrant - -c "ln -s /vagrant/smrtanalysis_2.3.0.140936.run smrtanalysis_2.3.0.140936.run"
+fi
+if [ ! -e /vagrant/smrtanalysis-patch_2.3.0.140936.p5.run ]; then
+  su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis-patch_2.3.0.140936.p5.run"
+else
+  su vagrant - -c "ln -s /vagrant/smrtanalysis-patch_2.3.0.140936.p5.run smrtanalysis-patch_2.3.0.140936.p5.run"
+fi
 su vagrant - -c "bash smrtanalysis_2.3.0.140936.run \
     --rootdir /home/vagrant \
     --patchfile smrtanalysis-patch_2.3.0.140936.p5.run \
