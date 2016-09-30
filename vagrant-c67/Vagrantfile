@@ -4,7 +4,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "bento/centos-6.7"
   config.vm.network "forwarded_port", guest:8080, host:8080
   config.vm.provider "virtualbox" do |vb|
     vb.customize ["modifyvm", :id, "--memory", "2048"]
@@ -12,8 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 $script = <<BOOTSTRAP
-apt-get update
-apt-get -y install rsync
+yum -y install rsync
 if [ ! -e /vagrant/smrtanalysis_2.3.0.140936.run ]; then
   su vagrant - -c "wget http://files.pacb.com/software/smrtanalysis/2.3.0/smrtanalysis_2.3.0.140936.run"
 else
